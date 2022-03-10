@@ -1,5 +1,8 @@
 <?php
 /**
+ * @package CSV2DB
+ */
+/**
  * Plugin Name: CSV To DB
  * Plugin URI: https://github.com/wlady
  * Description: Import CSV file into DB
@@ -7,17 +10,8 @@
  * Author URI: https://github.com/wlady
  * Version: 2.0.0
  * Text Domain: csv2db
- *
- * Copyright: (c) 2022 Wordpress
- *
  * License: GNU General Public License v3.0
  * License URI: http://www.gnu.org/licenses/gpl-3.0.html
- *
- * @package   CSV2DB
- * @author    Vladimir Zabara
- * @category  Admin
- * @copyright Copyright (c) 2022, Wordpress
- * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  */
 
 namespace CSV2DB;
