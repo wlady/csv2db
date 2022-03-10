@@ -14,9 +14,6 @@ class Front extends Options {
 
 	public function __construct( $config ) {
 		parent::__construct( $config );
-
-		\register_activation_hook( $this->plugin_file, array( $this, 'init' ) );
-
 	}
 
 	public function dispatch( $action ) {

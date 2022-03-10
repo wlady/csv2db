@@ -9,7 +9,7 @@
         </div>
 	<?php endif; ?>
     <div id="output" class="updated hidden"></div>
-	<?php if ( count( $this->get_option( 'fields' ) ) ) : ?>
+	<?php if ( ! empty( $this->get_option( 'fields' ) ) ) : ?>
         <form action="" method="post" id="schema-table">
             <input type="hidden" name="action" value="save_schema"/>
             <h3><?php _e( 'Fields', 'csv2db' ); ?></h3>
@@ -46,15 +46,16 @@
 						<?php _e( 'Check', 'csv2db' ); ?>
                     </th>
                 </tr>
+                <?php if ( ! empty( $this->get_option( 'fields' ) ) ) : ?>
 				<?php foreach ( $this->get_option( 'fields' ) as $key => $field ) : ?>
                     <tr valign="top">
                         <td scope="row">
 							<?php echo $field['name']; ?>
-                            <input type="hidden" name="csv-to-db[fields][<?php echo $key; ?>][name]"
+                            <input type="hidden" name="csv2db[fields][<?php echo $key; ?>][name]"
                                    value="<?php echo $field['name']; ?>"/>
                         </td>
                         <td>
-                            <select name="csv-to-db[fields][<?php echo $key; ?>][type]" style="width:100%"
+                            <select name="csv2db[fields][<?php echo $key; ?>][type]" style="width:100%"
                                     onchange="changeSize(this.value, <?php echo $key; ?>)">
                                 <option <?php if ( $field['type'] == 'VARCHAR' ) {
 									echo 'selected';
@@ -87,19 +88,19 @@
                             </select>
                         </td>
                         <td>
-                            <input name="csv-to-db[fields][<?php echo $key; ?>][size]" type="text"
+                            <input name="csv2db[fields][<?php echo $key; ?>][size]" type="text"
                                    value="<?php echo $field['size']; ?>" style="width:100%"/>
                         </td>
                         <td>
-                            <input type="checkbox" name="csv-to-db[fields][<?php echo $key; ?>][null]"
-                                   value="1" <?php echo $field['null'] == 1 ? 'checked="checked"' : ''; ?> />
+                            <input type="checkbox" name="csv2db[fields][<?php echo $key; ?>][null]"
+                                   value="1" <?php echo ($field['null'] ?? 0) == 1 ? 'checked="checked"' : ''; ?> />
                         </td>
                         <td>
-                            <input type="checkbox" name="csv-to-db[fields][<?php echo $key; ?>][ai]"
-                                   value="1" <?php echo $field['ai'] == 1 ? 'checked="checked"' : ''; ?> />
+                            <input type="checkbox" name="csv2db[fields][<?php echo $key; ?>][ai]"
+                                   value="1" <?php echo ($field['ai'] ?? 0) == 1 ? 'checked="checked"' : ''; ?> />
                         </td>
                         <td>
-                            <select class="indexSelector" name="csv-to-db[fields][<?php echo $key; ?>][index]"
+                            <select class="indexSelector" name="csv2db[fields][<?php echo $key; ?>][index]"
                                     style="width:100%" onchange="checkIndex(this.value, <?php echo $key; ?>)">
                                 <option></option>
                                 <option <?php if ( $field['index'] == 'PRIMARY' ) {
@@ -117,15 +118,15 @@
                             </select>
                         </td>
                         <td>
-                            <input type="text" name="csv-to-db[fields][<?php echo $key; ?>][title]"
+                            <input type="text" name="csv2db[fields][<?php echo $key; ?>][title]"
                                    value="<?php echo $field['title']; ?>"/>
                         </td>
                         <td>
-                            <input type="checkbox" name="csv-to-db[fields][<?php echo $key; ?>][show]"
-                                   value="1" <?php echo $field['show'] == 1 ? 'checked="checked"' : ''; ?> />
+                            <input type="checkbox" name="csv2db[fields][<?php echo $key; ?>][show]"
+                                   value="1" <?php echo ($field['show'] ?? 0) == 1 ? 'checked="checked"' : ''; ?> />
                         </td>
                         <td>
-                            <select name="csv-to-db[fields][<?php echo $key; ?>][align]" style="width:100%">
+                            <select name="csv2db[fields][<?php echo $key; ?>][align]" style="width:100%">
                                 <option></option>
                                 <option value="left" <?php if ( $field['align'] == 'left' ) {
 									echo 'selected';
@@ -140,12 +141,13 @@
                         </td>
                         <td>
                             <input class="checkSelector" type="checkbox"
-                                   name="csv-to-db[fields][<?php echo $key; ?>][check]"
-                                   value="1" <?php echo $field['check'] == 1 ? 'checked="checked"' : ''; ?>
+                                   name="csv2db[fields][<?php echo $key; ?>][check]"
+                                   value="1" <?php echo ($field['check'] ?? 0) == 1 ? 'checked="checked"' : ''; ?>
                                    onchange="checkOtherCheckboxes(<?php echo $key; ?>)"/>
                         </td>
                     </tr>
 				<?php endforeach; ?>
+				<?php endif; ?>
             </table>
             <p class="submit">
                 <input type="submit" class="button-primary pull-left submitBtn"
@@ -197,8 +199,7 @@
     </div>
     <div class="clearfix"></div>
     <hr/>
-    <form action="" method="post" enctype="multipart/form-data" id="upload_form" onsubmit="return false">
-        <input type="hidden" name="action" value="analyze_csv"/>
+    <form action="" method="post" enctype="multipart/form-data" id="analyze_form" onsubmit="return false">
         <h3><?php _e( 'Analyze CSV', 'csv2db' ); ?></h3>
         <table class="form-table">
             <tr valign="top">
@@ -213,7 +214,8 @@
         <p class="submit">
             <input type="button" class="button-primary" value="<?php _e( 'Analyze', 'csv2db' ) ?>" id="upload_btn"
                    data-toggle="tooltip"
-                   title="<?php _e( 'Analyze CSV file and create the fields configuration', 'csv2db' ) ?>"/>
+                   title="<?php _e( 'Analyze CSV file and create the fields configuration', 'csv2db' ) ?>"
+            onclick="return analyzeForm()"/>
         </p>
     </form>
     <div id="progress-wrp" class="progress progress-striped active">

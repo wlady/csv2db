@@ -13,6 +13,7 @@ use CSV2DB\Models\Table;
 use CSV2DB\Options;
 
 class Admin extends Options {
+	protected $upload_max_filesize = 0;
 	// used in Bootstrap Table
 	protected $data_id_field = 'id';
 	// Every POST action has related method
@@ -50,6 +51,7 @@ class Admin extends Options {
 
 	public function __construct( $config ) {
 		parent::__construct( $config );
+		$this->upload_max_filesize = File::convert_bytes( ini_get( 'upload_max_filesize' ) );
 	}
 
 	public function init() {
@@ -106,10 +108,14 @@ class Admin extends Options {
 
 	/**
 	 * Add Settings link
+	 *
+	 * @param $links
+	 *
+	 * @return array
 	 */
 	public static function plugin_action_links( $links ) {
 		$action_links = [
-			'settings' => '<a href="' . admin_url( 'admin.php?page=wp-csv-to-db-setting' ) . '" aria-label="' . esc_attr__( 'Settings',
+			'settings' => '<a href="' . admin_url( 'admin.php?page=wp-csv-to-db-settings' ) . '" aria-label="' . esc_attr__( 'Settings',
 					'csv2db' ) . '">' . esc_html__( 'Settings', 'csv2db' ) . '</a>',
 		];
 
@@ -128,36 +134,36 @@ class Admin extends Options {
 				\__( 'CSV to DB', 'csv2db' ),
 				'manage_options',
 				'wp-csv-to-db', [
-					$this,
-					'items_page_action',
-				], 'dashicons-book-alt' );
+				$this,
+				'items_page_action',
+			], 'dashicons-book-alt' );
 			\add_submenu_page(
 				'wp-csv-to-db',
 				\__( 'Import', 'csv2db' ),
 				\__( 'Import', 'csv2db' ),
 				'manage_options',
 				'wp-csv-to-db-import', [
-					$this,
-					'import_page_action',
-				] );
+				$this,
+				'import_page_action',
+			] );
 			\add_submenu_page(
 				'wp-csv-to-db',
 				\__( 'Fields', 'csv2db' ),
 				\__( 'Fields', 'csv2db' ),
 				'manage_options',
 				'wp-csv-to-db-fields', [
-					$this,
-					'fields_page_action',
-				] );
+				$this,
+				'fields_page_action',
+			] );
 			\add_submenu_page(
 				'wp-csv-to-db',
 				\__( 'Settings', 'csv2db' ),
 				\__( 'Settings', 'csv2db' ),
 				'manage_options',
 				'wp-csv-to-db-settings', [
-					$this,
-					'options_page_action',
-				] );
+				$this,
+				'options_page_action',
+			] );
 		}
 	}
 
@@ -180,17 +186,17 @@ class Admin extends Options {
 				if ( is_string( $res ) ) {
 					throw new \Exception( htmlspecialchars( $res, ENT_QUOTES ) );
 				} else {
-					$results = array(
+					$results = [
 						'success' => true,
-						'message' => \__( 'Success!', 'csv-to-db' ),
-					);
+						'message' => \__( 'Success!', 'csv2db' ),
+					];
 				}
 			}
 		} catch ( \Exception $e ) {
-			$results = array(
+			$results = [
 				'success' => false,
 				'message' => $e->getMessage(),
-			);
+			];
 		}
 		File::unlink( $tmp_file_name );
 		$this->parse_view( 'json', $results );
@@ -207,31 +213,35 @@ class Admin extends Options {
 			if ( $tmp_file_name ) {
 				$fp = fopen( $tmp_file_name, 'r' );
 				if ( ! $fp ) {
-					throw new \Exception( \__( 'Cannot read from CSV', 'csv-to-db' ) );
+					throw new \Exception( \__( 'Cannot read from CSV', 'csv2db' ) );
 				}
-				$fields = fgetcsv( $fp, 0, $this->get_option( 'fields-terminated' ), $this->get_option( 'fields-enclosed' ), $this->get_option( 'fields-escaped' ) );
+				$fields = fgetcsv( $fp, 0,
+					$this->get_option( 'fields-terminated' ),
+					$this->get_option( 'fields-enclosed' ),
+					stripslashes( $this->get_option( 'fields-escaped' ) )
+				);
 				if ( ! $fields || ! count( $fields ) ) {
-					throw new \Exception( \__( 'Cannot detect fields', 'csv-to-db' ) );
+					throw new \Exception( \__( 'Cannot detect fields', 'csv2db' ) );
 				} else {
 					// save fields
-					$fields_data = array();
+					$fields_data = [];
 					foreach ( $fields as $field ) {
 						$fields_data[] = $this->generate_empty_field( $field );
 					}
 					$this->options['fields'] = $fields_data;
-					\update_option( 'csv-to-db', $this->options );
-					$results = array(
+					\update_option( self::OPTIONS_NAME, $this->options );
+					$results = [
 						'success' => true,
 						'data'    => $fields,
-						'message' => \__( 'Success! Reloading...', 'csv-to-db' ),
-					);
+						'message' => \__( 'Success! Reloading...', 'csv2db' ),
+					];
 				}
 			}
 		} catch ( \Exception $e ) {
-			$results = array(
+			$results = [
 				'success' => false,
 				'message' => $e->getMessage(),
-			);
+			];
 		}
 		File::unlink( $tmp_file_name );
 		$this->parse_view( 'json', $results );
@@ -243,10 +253,10 @@ class Admin extends Options {
 	 * @Hook wp_ajax_get_items
 	 */
 	public function wp_ajax_get_items_hook() {
-		$results = array(
+		$results = [
 			'total' => 0,
-			'rows'  => array(),
-		);
+			'rows'  => [],
+		];
 		$columns = $this->collect_columns_to_show( $skip_auto_generated = true );
 		if ( count( $columns ) ) {
 			$start = (int) filter_var( $_POST['offset'], FILTER_SANITIZE_NUMBER_INT );
@@ -257,10 +267,10 @@ class Admin extends Options {
 			$order  = filter_var( $_POST['order'], FILTER_SANITIZE_STRING );
 			$fields = array_column( $columns, 'name' );
 			[ $total, $rows ] = Table::get_items( $columns, $fields, $start, $limit, $order );
-			$results = array(
+			$results = [
 				'total' => (int) $total,
 				'rows'  => (array) $rows,
-			);
+			];
 		}
 		$this->parse_view( 'json', $results );
 	}
@@ -271,26 +281,28 @@ class Admin extends Options {
 	 * @return array
 	 */
 	public function collect_columns_to_show( $skip_auto_generated = false ) {
-		$columns = array();
+		$columns = [];
 		$checked = false;
-		foreach ( $this->options['fields'] as $field ) {
-			if ( isset( $field['show'] ) && ! empty( $field['title'] ) ) {
-				$columns[] = $field;
-				if ( isset( $field['check'] ) ) {
-					$this->data_id_field = $field['name'];
-					$checked             = true;
+		if ( ! empty( $this->options['fields'] ) ) {
+			foreach ( $this->options['fields'] as $field ) {
+				if ( isset( $field['show'] ) && ! empty( $field['title'] ) ) {
+					$columns[] = $field;
+					if ( isset( $field['check'] ) ) {
+						$this->data_id_field = $field['name'];
+						$checked             = true;
+					}
 				}
 			}
-		}
-		usort( $columns, function ( $a, $b ) {
-			return ( isset( $a['index'] ) && $a['index'] == 'PRIMARY' ) ? 0 : 1;
-		} );
-		if ( ! $skip_auto_generated && ! $checked ) {
-			array_unshift( $columns, array(
-				'name'  => '__auto_generated_check_column__',
-				'check' => true,
-			) );
-			$this->data_id_field = '__auto_generated_check_column__';
+			usort( $columns, function ( $a, $b ) {
+				return ( isset( $a['index'] ) && $a['index'] == 'PRIMARY' ) ? 0 : 1;
+			} );
+			if ( ! $skip_auto_generated && ! $checked ) {
+				array_unshift( $columns, [
+					'name'  => '__auto_generated_check_column__',
+					'check' => true,
+				] );
+				$this->data_id_field = '__auto_generated_check_column__';
+			}
 		}
 
 		return $columns;
@@ -311,8 +323,9 @@ class Admin extends Options {
 	 * @Slug wp-csv-to-db-import
 	 */
 	public function import_page_action() {
-		if ( ! count( $this->options['fields'] ) ) {
-			$this->message = \__( 'Fields undefined! Click <a href="admin.php?page=wp-csv-to-db-fields">Fields</a> to prepare fields.', 'csv-to-db' );
+		if ( empty( $this->options['fields'] ) ) {
+			$this->message = \__( 'Fields undefined! Click <a href="admin.php?page=wp-csv-to-db-fields">Fields</a> to prepare fields.',
+				'csv2db' );
 
 			return $this->parse_view( 'error' );
 		} else {
@@ -337,11 +350,12 @@ class Admin extends Options {
 	public function items_page_action() {
 		$columns = $this->collect_columns_to_show();
 		if ( ! count( $columns ) ) {
-			$this->message = \__( 'Columns undefined! Click <a href="admin.php?page=wp-csv-to-db-fields">Fields</a> to prepare columns.', 'csv-to-db' );
+			$this->message = \__( 'Columns undefined! Click <a href="admin.php?page=wp-csv-to-db-fields">Fields</a> to prepare columns.',
+				'csv2db' );
 
 			return $this->parse_view( 'error' );
 		} else {
-			return $this->parse_view( 'items', array( 'columns' => $columns ) );
+			return $this->parse_view( 'items', [ 'columns' => $columns ] );
 		}
 	}
 
@@ -358,8 +372,8 @@ class Admin extends Options {
 	 * @Action save_fields
 	 */
 	public function save_fields_action() {
-		$this->options['fields'] = $_POST['csv-to-db']['fields'];
-		\update_option( 'csv-to-db', $this->options );
+		$this->options['fields'] = $_POST['csv2db']['fields'];
+		\update_option( self::OPTIONS_NAME, $this->options );
 	}
 
 	/**
@@ -372,18 +386,20 @@ class Admin extends Options {
 				$content = unserialize( file_get_contents( $tmp_file_name ) );
 				if ( $content ) {
 					$this->options['fields'] = $content;
-					\update_option( 'csv-to-db', $this->options );
-					$results = array(
+					\update_option( self::OPTIONS_NAME, $this->options );
+					$results = [
 						'success' => true,
-						'message' => \__( 'Success!', 'csv-to-db' ),
-					);
+						'message' => \__( 'Success!', 'csv2db' ),
+					];
+				} else {
+					throw new \Exception( __( 'Wrong file format' ) );
 				}
 			}
 		} catch ( \Exception $e ) {
-			$results = array(
+			$results = [
 				'success' => false,
 				'message' => $e->getMessage(),
-			);
+			];
 		}
 		File::unlink( $tmp_file_name );
 		$this->parse_view( 'json', $results );
@@ -393,8 +409,8 @@ class Admin extends Options {
 	 * @Action clear_fields
 	 */
 	public function clear_fields_action() {
-		$this->options['fields'] = array();
-		\update_option( 'csv-to-db', $this->options );
+		$this->options['fields'] = [];
+		\update_option( self::OPTIONS_NAME, $this->options );
 	}
 
 	/**
@@ -403,7 +419,7 @@ class Admin extends Options {
 	public function export_fields_action() {
 		$this->save_fields_action();
 		$content = serialize( $this->options['fields'] );
-		$this->parse_view( 'attachment', array( 'content' => $content, 'filename' => 'csv-to-db-fields.txt' ) );
+		$this->parse_view( 'attachment', [ 'content' => $content, 'filename' => 'csv-to-db-fields.txt' ] );
 	}
 
 	/**
@@ -412,12 +428,13 @@ class Admin extends Options {
 	public function export_schema_action() {
 		$this->save_fields_action();
 		$createTable = Table::create_schema( $this->options['fields'] );
+		$v           = CSV2DB_VERSION;
 		$content     = <<<EOC
-# Schema File v.1.0.0
+# Schema File v.{$v}
 # Do not edit!!!
 {$createTable};
 
 EOC;
-		$this->parse_view( 'attachment', array( 'content' => $content, 'filename' => 'csv-to-db-schema.sql' ) );
+		$this->parse_view( 'attachment', [ 'content' => $content, 'filename' => 'csv-to-db-schema.sql' ] );
 	}
 }

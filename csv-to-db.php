@@ -41,8 +41,8 @@ if ( ! function_exists( 'flog' ) ) {
 
 defined( 'ABSPATH' ) or exit;
 
-define( 'CSV2DB_VERSION', '1.2.7' );
-define( 'CSV2DB_SUPPORT_PHP', '7.0' );
+define( 'CSV2DB_VERSION', '2.0.0' );
+define( 'CSV2DB_SUPPORT_PHP', '7.4' );
 define( 'CSV2DB_SUPPORT_WP', '5.0' );
 
 define( 'CSV2DB_DEBUG', true );

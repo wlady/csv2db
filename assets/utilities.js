@@ -12,7 +12,7 @@ function checkOtherCheckboxes(key) {
 
 function checkIndex(val, key) {
     if (val=='PRIMARY') {
-        jQuery('[name="csv-to-db[fields]['+key+'][type]"]').val('INT');
+        jQuery('[name="csv2db[fields]['+key+'][type]"]').val('INT');
         changeSize('INT', key);
         jQuery('.indexSelector').each(function(idx) {
             if (idx!=key && jQuery(this).val()=='PRIMARY') {
@@ -26,22 +26,22 @@ function changeSize(val, key) {
     switch (val) {
         case 'TEXT':
         case 'BLOB':
-            jQuery('[name="csv-to-db[fields]['+key+'][size]"]').val('');
+            jQuery('[name="csv2db[fields]['+key+'][size]"]').val('');
             break;
         case 'INT':
-            jQuery('[name="csv-to-db[fields]['+key+'][size]"]').val('11');
+            jQuery('[name="csv2db[fields]['+key+'][size]"]').val('11');
             break;
         case 'FLOAT':
-            jQuery('[name="csv-to-db[fields]['+key+'][size]"]').val('7,3');
+            jQuery('[name="csv2db[fields]['+key+'][size]"]').val('7,3');
             break;
         case 'DOUBLE':
-            jQuery('[name="csv-to-db[fields]['+key+'][size]"]').val('24,10');
+            jQuery('[name="csv2db[fields]['+key+'][size]"]').val('24,10');
             break;
         case 'DECIMAL':
-            jQuery('[name="csv-to-db[fields]['+key+'][size]"]').val('15,4');
+            jQuery('[name="csv2db[fields]['+key+'][size]"]').val('15,4');
             break;
         default:
-            jQuery('[name="csv-to-db[fields]['+key+'][size]"]').val('255');
+            jQuery('[name="csv2db[fields]['+key+'][size]"]').val('255');
             break;
     }
 }
@@ -166,3 +166,21 @@ function uploadFile(callbackFn) {
         jQuery(result_output).replaceWith('<div id="output" class="updated error">'+error[i]+"</div>");
     });
 }
+
+function analyzeForm() {
+    var elem = document.getElementById('analyze_form');
+    var fd = new FormData(elem);
+    fd.append('action', 'analyze_csv');
+    jQuery.ajax({
+        url: '/wp-admin/admin-ajax.php',
+        data: fd,
+        processData: false,
+        contentType: false,
+        method: 'POST',
+        success: function(res) {
+            document.location.reload();
+        }
+    });
+    return false;
+}
+

@@ -38,13 +38,13 @@ class Table {
 	public static function create_schema( $fields ) {
 		global $wpdb;
 
-		$columns = array();
-		$indexes = array();
+		$columns = [];
+		$indexes = [];
 		foreach ( $fields as $field ) {
 			$type = $field['type'];
-			$null = $field['null'] == 0 ? 'NOT NULL' : 'NULL';
-			$ai   = $field['ai'] == 1 ? 'AUTO_INCREMENT' : '';
-			if ( ! in_array( $type, array( 'TEXT', 'BLOB' ) ) ) {
+			$null = ( $field['null'] ?? 0 ) == 0 ? 'NOT NULL' : 'NULL';
+			$ai   = ( $field['ai'] ?? 0 ) == 1 ? 'AUTO_INCREMENT' : '';
+			if ( ! in_array( $type, [ 'TEXT', 'BLOB' ] ) ) {
 				$type = "{$field['type']}({$field['size']}) {$null} {$ai}";
 			}
 			$columns[] = "`{$field['name']}` {$type}";
@@ -78,14 +78,14 @@ class Table {
 		global $wpdb;
 
 		$use_local     = $options['use-local'] == 1 ? 'LOCAL' : '';
-		$fields_params = array();
-		$lines_params  = array();
+		$fields_params = [];
+		$lines_params  = [];
 		if ( ! empty( $options['fields-terminated'] ) ) {
 			$fields_params[] = 'TERMINATED BY \'' . $options['fields-terminated'] . '\'';
 		}
 		if ( ! empty( $options['fields-enclosed'] ) ) {
 			$symbol = $options['fields-enclosed'];
-			if ( in_array( $symbol, array( '"', "'" ) ) ) {
+			if ( in_array( $symbol, [ '"', "'" ] ) ) {
 				$fields_params[] = 'ENCLOSED BY \'\\' . $symbol . '\'';
 			}
 		}
@@ -125,11 +125,12 @@ class Table {
 	public static function get_items( $columns, $fields, $start = 0, $limit = 10, $order = 'asc' ) {
 		global $wpdb;
 
-		$res   = $wpdb->get_results( 'SELECT SQL_CALC_FOUND_ROWS `' . implode( '`,`', $fields ) . '` FROM `' . $wpdb->get_blog_prefix() . self::TABLE_NAME . '` LIMIT ' . "{$start}, {$limit}" );
+		$res   = $wpdb->get_results( 'SELECT SQL_CALC_FOUND_ROWS `' . implode( '`,`',
+				$fields ) . '` FROM `' . $wpdb->get_blog_prefix() . self::TABLE_NAME . '` LIMIT ' . "{$start}, {$limit}" );
 		$total = $wpdb->get_var( 'SELECT FOUND_ROWS() AS total' );
 		$rows  = self::convert_fields( $columns, $res );
 
-		return array( $total, $rows );
+		return [ $total, $rows ];
 	}
 
 	/**

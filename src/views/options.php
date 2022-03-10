@@ -9,7 +9,7 @@
 					<?php _e( 'Use LOCAL', 'csv2db' ); ?>
                 </td>
                 <td>
-                    <input type="checkbox" name="csv-to-db[use-local]"
+                    <input type="checkbox" name="csv2db[use-local]"
                            value="1" <?php echo( $this->get_option( 'use-local' ) ? 'checked="checked"' : '' ) ?> />
                 </td>
             </tr>
@@ -18,7 +18,7 @@
 					<?php _e( 'Fields Terminated By', 'csv2db' ); ?>
                 </td>
                 <td>
-                    <input type="text" name="csv-to-db[fields-terminated]"
+                    <input type="text" name="csv2db[fields-terminated]"
                            value="<?php echo htmlspecialchars( $this->get_option( 'fields-terminated' ), ENT_QUOTES ); ?>"
                            size="100"/>
                 </td>
@@ -28,7 +28,7 @@
 					<?php _e( 'Fields Enclosed By', 'csv2db' ); ?>
                 </td>
                 <td>
-                    <input type="text" name="csv-to-db[fields-enclosed]"
+                    <input type="text" name="csv2db[fields-enclosed]"
                            value="<?php echo htmlspecialchars( $this->get_option( 'fields-enclosed' ), ENT_QUOTES ); ?>"
                            size="100"/>
                 </td>
@@ -38,7 +38,7 @@
 					<?php _e( 'Fields Escaped By', 'csv2db' ); ?>
                 </td>
                 <td>
-                    <input type="text" name="csv-to-db[fields-escaped]"
+                    <input type="text" name="csv2db[fields-escaped]"
                            value="<?php echo htmlspecialchars( $this->get_option( 'fields-escaped' ), ENT_QUOTES ); ?>"
                            size="100"/>
                 </td>
@@ -48,7 +48,7 @@
 					<?php _e( 'Lines Starting By', 'csv2db' ); ?>
                 </td>
                 <td>
-                    <input type="text" name="csv-to-db[lines-starting]"
+                    <input type="text" name="csv2db[lines-starting]"
                            value="<?php echo $this->get_option( 'lines-starting' ); ?>" size="100"/>
                 </td>
             </tr>
@@ -57,7 +57,7 @@
 					<?php _e( 'Lines Terminated By', 'csv2db' ); ?>
                 </td>
                 <td>
-                    <input type="text" name="csv-to-db[lines-terminated]"
+                    <input type="text" name="csv2db[lines-terminated]"
                            value="<?php echo htmlspecialchars( $this->get_option( 'lines-terminated' ), ENT_QUOTES ); ?>"
                            size="100"/>
                 </td>
@@ -65,7 +65,7 @@
         </table>
         <p class="submit">
             <input type="submit" class="button-primary" value="<?php _e( 'Save Changes', 'csv2db' ) ?>"/>
-            <input type="submit" name="csv-to-db-defaults" id="wp-csv-to-db-defaults" class="button-primary"
+            <input type="submit" name="csv2db-defaults" id="wp-csv2db-defaults" class="button-primary"
                    value="<?php _e( 'Reset to Defaults', 'csv2db' ) ?>" onclick="return confirmResetCSV2DB()"/>
         </p>
     </form>
