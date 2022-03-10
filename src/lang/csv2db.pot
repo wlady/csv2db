@@ -1,0 +1,266 @@
+# Copyright (C) 2022 
+# This file is distributed under the same license as the  package.
+msgid ""
+msgstr ""
+"Project-Id-Version:  \n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/quick-site-builder-master\n"
+"POT-Creation-Date: 2022-03-08 15:00:57+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2022-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+
+#: src/QSB/Controllers/Admin.php:111 src/QSB/Controllers/Admin.php:112
+#: src/QSB/Controllers/Admin.php:135
+msgid "Settings"
+msgstr ""
+
+#: src/QSB/Controllers/Admin.php:125 src/views/error.php:2
+msgid "CSV To DB"
+msgstr ""
+
+#: src/QSB/Controllers/Admin.php:130
+msgid "Import"
+msgstr ""
+
+#: src/QSB/Controllers/Admin.php:261
+msgid "Resend Landing Template"
+msgstr ""
+
+#: src/QSB/Controllers/Front.php:170 src/views/edit-button.php:2
+msgid "Edit Template"
+msgstr ""
+
+#: src/QSB/Functions.php:42
+msgid "Template Blocks"
+msgstr ""
+
+#: src/QSB/Functions.php:74
+msgid "Template Tips"
+msgstr ""
+
+#: src/QSB/Functions.php:656
+msgid "Try it out"
+msgstr ""
+
+#: src/QSB/Helper.php:111
+msgid "<strong>CSV To DB</strong> requires PHP version %s or later."
+msgstr ""
+
+#: src/QSB/Helper.php:122
+msgid ""
+"<strong>CSV To DB</strong> requires WordPress version %s or later."
+msgstr ""
+
+#: src/QSB/Helper.php:133
+msgid "<strong>CSV To DB</strong> requires WooCommerce to be active."
+msgstr ""
+
+#: src/QSB/Helper.php:141
+msgid ""
+"<strong>CSV To DB</strong> requires WooCommerce version %s or later."
+msgstr ""
+
+#: src/QSB/Helper.php:152
+msgid ""
+"<strong>CSV To DB</strong> requires Media Library Categories to be "
+"active."
+msgstr ""
+
+#: src/QSB/Helper.php:160
+msgid ""
+"<strong>CSV To DB</strong> requires Media Library Categories "
+"version %s or later."
+msgstr ""
+
+#: src/QSB/Models/Landing.php:128
+msgid "Error parsing config file: %s"
+msgstr ""
+
+#: src/QSB/Models/Landing.php:142
+msgid "Config property %s is not set in config file"
+msgstr ""
+
+#: src/QSB/Models/Landing.php:155
+msgid "Error reading screenshot "
+msgstr ""
+
+#: src/QSB/Models/Landing.php:164
+msgid "Landing blocks not set in config file"
+msgstr ""
+
+#: src/views/download-link.php:3
+msgid "Visit Your Site"
+msgstr ""
+
+#: src/views/download-link.php:4 src/views/view-link.php:2
+msgid "Click here"
+msgstr ""
+
+#: src/views/download-link.php:7
+msgid "Zip Archive"
+msgstr ""
+
+#: src/views/download-link.php:8
+msgid "Download"
+msgstr ""
+
+#: src/views/editor.php:8
+msgid "CSV To DB - Page Editor"
+msgstr ""
+
+#: src/views/editor.php:119
+msgid "Save"
+msgstr ""
+
+#: src/views/editor.php:120
+msgid "Preview"
+msgstr ""
+
+#: src/views/editor.php:188 src/views/editor.php:189
+msgid "Fill required fields"
+msgstr ""
+
+#: src/views/import.php:3
+msgid "Add Landing Template"
+msgstr ""
+
+#: src/views/import.php:9
+msgid "Upload file"
+msgstr ""
+
+#: src/views/input.php:47 src/views/input.php:73
+msgid "Datei Aaswählen"
+msgstr ""
+
+#: src/views/items.php:3
+msgid "CSV To DB Landings"
+msgstr ""
+
+#: src/views/items.php:5
+msgid "Import Template"
+msgstr ""
+
+#: src/views/items.php:6
+msgid "Delete"
+msgstr ""
+
+#: src/views/items.php:25
+msgid "Name"
+msgstr ""
+
+#: src/views/items.php:26
+msgid "Blocks"
+msgstr ""
+
+#: src/views/items.php:27
+msgid "Created"
+msgstr ""
+
+#: src/views/items.php:34
+msgid "Are you sure?"
+msgstr ""
+
+#: src/views/options.php:2
+msgid "CSV To DB Settings"
+msgstr ""
+
+#: src/views/options.php:4
+msgid "General"
+msgstr ""
+
+#: src/views/options.php:5
+msgid "Email"
+msgstr ""
+
+#: src/views/options.php:6
+msgid "Screenshots"
+msgstr ""
+
+#: src/views/options.php:15
+msgid "Debug"
+msgstr ""
+
+#: src/views/options.php:24
+msgid "Tips Category"
+msgstr ""
+
+#: src/views/options.php:37
+msgid "Google Map API Key"
+msgstr ""
+
+#: src/views/options.php:47
+msgid "Enabled HTML tags"
+msgstr ""
+
+#: src/views/options.php:57
+msgid "Days to keep sites"
+msgstr ""
+
+#: src/views/options.php:63
+msgid "How long to keep generated sites, in days"
+msgstr ""
+
+#: src/views/options.php:68 src/views/options.php:115 src/views/options.php:168
+msgid "Save Changes"
+msgstr ""
+
+#: src/views/options.php:77
+msgid "From Name"
+msgstr ""
+
+#: src/views/options.php:87
+msgid "From Email"
+msgstr ""
+
+#: src/views/options.php:97
+msgid "Subject"
+msgstr ""
+
+#: src/views/options.php:107
+msgid "Email Text"
+msgstr ""
+
+#: src/views/options.php:124
+msgid "URL Parameters"
+msgstr ""
+
+#: src/views/options.php:130
+msgid ""
+"Additional URL parameters to generate screenshot for preview, E.g. ?css-"
+"animation=false "
+msgstr ""
+
+#: src/views/options.php:135
+msgid "Screenshot width"
+msgstr ""
+
+#: src/views/options.php:141
+msgid "You can set comma separated list, E.g. 1920,800,320"
+msgstr ""
+
+#: src/views/options.php:146
+msgid "Image Quality"
+msgstr ""
+
+#: src/views/options.php:152
+msgid "JPEG image quality, 0-100"
+msgstr ""
+
+#: src/views/options.php:157
+msgid "JavaScript Delay"
+msgstr ""
+
+#: src/views/options.php:163
+msgid "Delay JS execution in milliseconds"
+msgstr ""
+
+#: src/views/options.php:177
+msgid "Are you sure to reset CSV To DB settings?"
+msgstr ""
+
+#: src/views/view-link.php:2
+msgid "View Generated Landing"
+msgstr ""

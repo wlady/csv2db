@@ -1,0 +1,10 @@
+{
+    "require": {
+        "php": "^7.3|^8.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "CSV2DB\\": "src/CSV2DB/"
+        }
+    }
+}
