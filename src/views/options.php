@@ -1,5 +1,5 @@
 <div class="wrap ">
-    <h2><?php _e( 'CSV to DB', 'csv2db' ); ?></h2>
+    <h2><?php _e( 'CSV To DB', 'csv2db' ); ?></h2>
     <form action="options.php" method="post">
 		<?php settings_fields( 'csv2db' ); ?>
         <h3><?php _e( 'CSV Import Options', 'csv2db' ); ?></h3>
@@ -72,6 +72,6 @@
 </div>
 <script>
     function confirmResetCSV2DB() {
-        return confirm("<?php _e( 'Are you sure to reset CSV to DB settings?', 'csv2db' ) ?>");
+        return confirm("<?php _e( 'Are you sure to reset CSV To DB settings?', 'csv2db' ) ?>");
     }
 </script>

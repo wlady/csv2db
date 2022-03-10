@@ -130,8 +130,8 @@ class Admin extends Options {
 	public function admin_menu_hook() {
 		if ( \current_user_can( 'manage_options' ) ) {
 			\add_menu_page(
-				\__( 'CSV to DB', 'csv2db' ),
-				\__( 'CSV to DB', 'csv2db' ),
+				\__( 'CSV To DB', 'csv2db' ),
+				\__( 'CSV To DB', 'csv2db' ),
 				'manage_options',
 				'wp-csv-to-db', [
 				$this,

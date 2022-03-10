@@ -3,9 +3,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"Report-Msgid-Bugs-To: http://wordpress.org/tag/quick-site-builder-MVC\n"
-"POT-Creation-Date: 2022-02-11 17:01:49+00:00\n"
-"PO-Revision-Date: 2022-02-22 12:30+0200\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/csv-to-db\n"
+"POT-Creation-Date: 2022-03-10 11:07:18+00:00\n"
+"PO-Revision-Date: 2022-03-10 13:31+0200\n"
 "Last-Translator: Vladimir Zabara <wlady2001@gmail.com>\n"
 "Language-Team: \n"
 "Language: ru_RU\n"
@@ -16,223 +16,285 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
 
-#: src/QSB/Controllers/Admin.php:104 src/QSB/Controllers/Admin.php:105
-#: src/QSB/Controllers/Admin.php:128
+#: src/CSV2DB/Controllers/Admin.php:118 src/CSV2DB/Controllers/Admin.php:119
+#: src/CSV2DB/Controllers/Admin.php:160 src/CSV2DB/Controllers/Admin.php:161
 msgid "Settings"
 msgstr "Настройки"
 
-#: src/QSB/Controllers/Admin.php:118 src/views/error.php:2
+#: src/CSV2DB/Controllers/Admin.php:133 src/CSV2DB/Controllers/Admin.php:134
+#: src/views/error.php:2 src/views/fields.php:3 src/views/import.php:2
+#: src/views/options.php:2
 msgid "CSV To DB"
-msgstr "Конструктор сайтов"
+msgstr "CSV в БД"
 
-#: src/QSB/Controllers/Admin.php:123
+#: src/CSV2DB/Controllers/Admin.php:142 src/CSV2DB/Controllers/Admin.php:143
+#: src/views/fields.php:190 src/views/import.php:41 src/views/import.php:53
 msgid "Import"
 msgstr "Импортировать"
 
-#: src/QSB/Controllers/Admin.php:246
-msgid "Resend Landing Template"
-msgstr "Послать архив пользователю"
+#: src/CSV2DB/Controllers/Admin.php:151 src/CSV2DB/Controllers/Admin.php:152
+#: src/views/fields.php:15
+msgid "Fields"
+msgstr "Поля"
 
-#: src/QSB/Functions.php:40
-msgid "Template Blocks"
-msgstr "Блоки шаблона"
+#: src/CSV2DB/Controllers/Admin.php:191 src/CSV2DB/Controllers/Admin.php:392
+msgid "Success!"
+msgstr "Успех!"
 
-#: src/QSB/Helper.php:111
+#: src/CSV2DB/Controllers/Admin.php:216
+msgid "Cannot read from CSV"
+msgstr "Не могу прочитать CSV"
+
+#: src/CSV2DB/Controllers/Admin.php:224
+msgid "Cannot detect fields"
+msgstr "Не могу определить поля"
+
+#: src/CSV2DB/Controllers/Admin.php:236
+msgid "Success! Reloading..."
+msgstr "Успех и перезагрузка…"
+
+#: src/CSV2DB/Controllers/Admin.php:327
+msgid ""
+"Fields undefined! Click <a href=\"admin.php?page=wp-csv-to-db-fields"
+"\">Fields</a> to prepare fields."
+msgstr ""
+"Поля не определены! Перейти в <a href=«admin.php?page=wp-csv-to-db-"
+"fields»>Поля</a> для настройки."
+
+#: src/CSV2DB/Controllers/Admin.php:353
+msgid ""
+"Columns undefined! Click <a href=\"admin.php?page=wp-csv-to-db-fields"
+"\">Fields</a> to prepare columns."
+msgstr ""
+"Колонки не определены! Перейти в <a href=«admin.php?page=wp-csv-to-db-"
+"fields»>Поля</a> для настройки."
+
+#: src/CSV2DB/Controllers/Admin.php:395
+msgid "Wrong file format"
+msgstr "Неверный формат файла"
+
+#: src/CSV2DB/Helper.php:63
 msgid "<strong>CSV To DB</strong> requires PHP version %s or later."
-msgstr "<strong>Конструктор сайта</strong> требует версии PHP %s и выше."
+msgstr "<strong>CSV в БД</strong> требует версии PHP %s и выше."
 
-#: src/QSB/Helper.php:122
-msgid ""
-"<strong>CSV To DB</strong> requires WordPress version %s or later."
-msgstr "<strong>Конструктор сайта</strong> требует версии WordPress %s и выше."
+#: src/CSV2DB/Helper.php:74
+msgid "<strong>CSV To DB</strong> requires WordPress version %s or later."
+msgstr "<strong>CSV в БД</strong> требует версии WordPress %s и выше."
 
-#: src/QSB/Helper.php:133
-msgid "<strong>CSV To DB</strong> requires WooCommerce to be active."
-msgstr "<strong>Конструктор сайта</strong> требует установленного WooCommerce."
+#: src/CSV2DB/Models/File.php:23 src/views/fields.php:233
+#: src/views/import.php:57
+msgid "File size is too big!"
+msgstr "Размер файла слишком большой!"
 
-#: src/QSB/Helper.php:141
-msgid ""
-"<strong>CSV To DB</strong> requires WooCommerce version %s or later."
-msgstr ""
-"<strong>Конструктор сайта</strong> требует версии WooCommerce %s и выше."
+#: src/CSV2DB/Models/File.php:32 src/views/fields.php:231
+#: src/views/import.php:55
+msgid "Unsupported File!"
+msgstr "Неверный формат файла!"
 
-#: src/QSB/Helper.php:152
-msgid ""
-"<strong>CSV To DB</strong> requires Media Library Categories to be "
-"active."
-msgstr ""
-"<strong>Конструктор сайта</strong> требует установленного Media Library "
-"Categories."
+#: src/CSV2DB/Models/File.php:44
+msgid "Error uploading File!"
+msgstr "Ошибка загрузки файла!"
 
-#: src/QSB/Helper.php:160
-msgid ""
-"<strong>CSV To DB</strong> requires Media Library Categories "
-"version %s or later."
-msgstr ""
-"<strong>Конструктор сайта</strong> требует версии Media Library Categories "
-"%s и выше."
+#: src/CSV2DB/Models/File.php:47
+msgid "Something wrong with upload! Is \"upload_max_filesize\" set correctly?"
+msgstr "Ошибка загрузки файла. Проверьте переменную «upload_max_filesize»"
 
-#: src/QSB/Models/Landing.php:115
-msgid "Error parsing config file: %s"
-msgstr "Ошибка парсинга конфигурационного файла: %s"
+#: src/CSV2DB/Models/Table.php:66
+msgid "Column configuration is empty"
+msgstr "Конфигурация колонки пустая"
 
-#: src/QSB/Models/Landing.php:132
-msgid "Config property %s is not set in config file"
-msgstr "Свойство %s не установлено в конфигурационном файле"
-
-#: src/QSB/Models/Landing.php:145
-msgid "Error reading screenshot "
-msgstr "Ошибка чтения файла скриншрта "
-
-#: src/QSB/Models/Landing.php:154
-msgid "Landing blocks not set in config file"
-msgstr "В конфигурационном файле не найдены блоки шаблона"
-
-#: src/views/download-link.php:3
-msgid "Visit Your Site"
-msgstr "Просмотр сайта"
-
-#: src/views/download-link.php:4 src/views/view-link.php:2
-msgid "Click here"
-msgstr "Ссылка"
-
-#: src/views/download-link.php:7
-msgid "Zip Archive"
-msgstr "Файл архива"
-
-#: src/views/download-link.php:8
-msgid "Download"
-msgstr "Загрузить"
-
-#: src/views/edit-button.php:2
-msgid "Edit Template"
-msgstr "Редактировать шаблон"
-
-#: src/views/editor.php:8
-msgid "CSV To DB - Page Editor"
-msgstr "Конструктор сайтов - Страница редактора"
-
-#: src/views/editor.php:77
-msgid "Build your site"
-msgstr "Сконструируй свой сайт"
-
-#: src/views/editor.php:78
-msgid "Fill out the required form fields and follow the instructions"
-msgstr "Заполните форму и следуйте инструкциям"
-
-#: src/views/editor.php:90
-msgid "Submit"
-msgstr "Отправить"
-
-#: src/views/editor.php:91
-msgid "Preview"
-msgstr "Посмотреть"
-
-#: src/views/import.php:3
-msgid "Add Landing Template"
-msgstr "Добавить шаблон"
-
-#: src/views/import.php:9
-msgid "Upload file"
-msgstr "Загрузить файл"
-
-#: src/views/items.php:3
-msgid "CSV To DB Landings"
-msgstr "Шаблоны Конструктора сайтов"
-
-#: src/views/items.php:5
-msgid "Import Template"
-msgstr "Импортировать"
-
-#: src/views/items.php:6
-msgid "Delete"
-msgstr "Удалить"
-
-#: src/views/items.php:25
+#: src/views/fields.php:19
 msgid "Name"
 msgstr "Название"
 
-#: src/views/items.php:26
-msgid "Blocks"
-msgstr "Блоков"
+#: src/views/fields.php:22
+msgid "Type"
+msgstr "Тип"
 
-#: src/views/items.php:27
-msgid "Created"
-msgstr "Дата"
+#: src/views/fields.php:25
+msgid "Size"
+msgstr "Размер"
 
-#: src/views/items.php:34
-msgid "Are you sure?"
-msgstr "Вы уверены?"
+#: src/views/fields.php:28
+msgid "Null"
+msgstr "Null"
 
-#: src/views/options.php:2
-msgid "CSV To DB Settings"
-msgstr "Настройки Конструктора сайтов"
+#: src/views/fields.php:31
+msgid "AI"
+msgstr "AI"
 
-#: src/views/options.php:4
-msgid "General"
-msgstr "Общие"
+#: src/views/fields.php:34
+msgid "Index"
+msgstr "Индекс"
 
-#: src/views/options.php:6
-msgid "Screenshots"
-msgstr "Скриншоты"
+#: src/views/fields.php:37
+msgid "Title"
+msgstr "Заголовок"
 
-#: src/views/options.php:15
-msgid "Debug"
-msgstr "Отладка"
+#: src/views/fields.php:40
+msgid "Show"
+msgstr "Показать"
 
-#: src/views/options.php:24
-msgid "Google Map API Key"
-msgstr "Ключ Google Map API"
+#: src/views/fields.php:43
+msgid "Align"
+msgstr "Выравнивание"
 
-#: src/views/options.php:34 src/views/options.php:81 src/views/options.php:123
+#: src/views/fields.php:46
+msgid "Check"
+msgstr "Выделить"
+
+#: src/views/fields.php:133
+msgid "Left"
+msgstr "Налево"
+
+#: src/views/fields.php:136
+msgid "Center"
+msgstr "Посередине"
+
+#: src/views/fields.php:139
+msgid "Right"
+msgstr "Направо"
+
+#: src/views/fields.php:154 src/views/options.php:67
 msgid "Save Changes"
 msgstr "Сохранить"
 
-#: src/views/options.php:43
-msgid "From Name"
-msgstr "Имя отправителя"
+#: src/views/fields.php:156
+msgid "Save fields configuration"
+msgstr "Сохранить конфигурацию полей"
 
-#: src/views/options.php:53
-msgid "From Email"
-msgstr "Адрес отправителя"
+#: src/views/fields.php:158
+msgid "Export Fields"
+msgstr "Экспортировать поля"
 
-#: src/views/options.php:63
-msgid "Subject"
-msgstr "Тема"
+#: src/views/fields.php:159
+msgid "Export fields configuration"
+msgstr "Экспортировать конфигурацию полей"
 
-#: src/views/options.php:73
-msgid "Email Text"
-msgstr "Тело письма"
+#: src/views/fields.php:161
+msgid "Clear Fields"
+msgstr "Очистить поля"
 
-#: src/views/options.php:90
-msgid "Screenshot width"
-msgstr "Ширина скриншота"
-
-#: src/views/options.php:96
-msgid "You can set comma separated list, E.g. 1920,800,320"
+#: src/views/fields.php:163
+msgid "Clear fields"
 msgstr ""
-"Вы можете использовать разделенный запятыми список, Например 1920,800,320"
 
-#: src/views/options.php:101
-msgid "Image Quality"
-msgstr "Качество"
+#: src/views/fields.php:165
+msgid "Create DB Table"
+msgstr "Создать БД"
 
-#: src/views/options.php:107
-msgid "JPEG image quality, 0-100"
-msgstr "Качество JPEG: 0-100"
+#: src/views/fields.php:167
+msgid "Create DB Table from current fields configuration"
+msgstr "Создать БД из текущей конфигурации полей"
 
-#: src/views/options.php:112
-msgid "JavaScript Delay"
-msgstr "Задержка JavaScript"
+#: src/views/fields.php:169
+msgid "Export Schema"
+msgstr "Экспортировать схему"
 
-#: src/views/options.php:118
-msgid "Delay JS execution in milliseconds"
-msgstr "Задержка выполнения JavaScript в миллисекундах"
+#: src/views/fields.php:170
+msgid "Export DB schema"
+msgstr "Экспортировать схему БД"
 
-#: src/views/options.php:132
+#: src/views/fields.php:178
+msgid "Import Fields"
+msgstr "Импортировать поля"
+
+#: src/views/fields.php:182
+msgid "Data File"
+msgstr "Файн данных"
+
+#: src/views/fields.php:192
+msgid "Import fields configuration"
+msgstr "Импортировать конфигурацию полей"
+
+#: src/views/fields.php:203
+msgid "Analyze CSV"
+msgstr "Анализ CSV"
+
+#: src/views/fields.php:207 src/views/import.php:17
+msgid "CSV File"
+msgstr "CSV файл"
+
+#: src/views/fields.php:215
+msgid "Analyze"
+msgstr "Анализировать"
+
+#: src/views/fields.php:217
+msgid "Analyze CSV file and create the fields configuration"
+msgstr "Запустить анализатор CSV файла и создать конфигурацию полей"
+
+#: src/views/fields.php:228 src/views/import.php:52
+msgid "Are you sure?"
+msgstr "Вы уверены?"
+
+#: src/views/fields.php:229
+msgid "Upload"
+msgstr "Загрузить файл"
+
+#: src/views/fields.php:230 src/views/import.php:54
+msgid "Your browser does not support new File API! Please upgrade."
+msgstr "Браузер не поддерживает File API! Попробуйте обновить."
+
+#: src/views/fields.php:232 src/views/import.php:56
+msgid "Limit Exceeded!"
+msgstr "Превышен лимит!"
+
+#: src/views/fields.php:234 src/views/import.php:58
+msgid "Please Wait..."
+msgstr "Подождите…"
+
+#: src/views/import.php:13
+msgid "CSV Import"
+msgstr "Импортировать CSV"
+
+#: src/views/import.php:25
+msgid "Skip first rows"
+msgstr "Пропустить строк вначале"
+
+#: src/views/import.php:33
+msgid "Re-Create table"
+msgstr "Пересоздать таблицу"
+
+#: src/views/import.php:42
+msgid "Import CSV file"
+msgstr "Импортировать CSV файл"
+
+#: src/views/items.php:3
+msgid "CSV To DB Items"
+msgstr "Записи"
+
+#: src/views/options.php:5
+msgid "CSV Import Options"
+msgstr "Настройка импорта CSV"
+
+#: src/views/options.php:9
+msgid "Use LOCAL"
+msgstr "Использовать LOCAL"
+
+#: src/views/options.php:18
+msgid "Fields Terminated By"
+msgstr "Разделитель полей"
+
+#: src/views/options.php:28
+msgid "Fields Enclosed By"
+msgstr "Значения полей обрамлены"
+
+#: src/views/options.php:38
+msgid "Fields Escaped By"
+msgstr "Символ экранирование"
+
+#: src/views/options.php:48
+msgid "Lines Starting By"
+msgstr "Строки начинаются с"
+
+#: src/views/options.php:57
+msgid "Lines Terminated By"
+msgstr "Разделитель строк"
+
+#: src/views/options.php:69
+msgid "Reset to Defaults"
+msgstr "Сброс настроек"
+
+#: src/views/options.php:75
 msgid "Are you sure to reset CSV To DB settings?"
 msgstr "Вы действительно хотите сбросить настройки?"
-
-#: src/views/view-link.php:2
-msgid "View Generated Landing"
-msgstr "Просмотр сгенерированного сайта"

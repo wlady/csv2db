@@ -1,6 +1,6 @@
 <div class="wrap ">
     <div id="icon-options-general" class="icon32"><br/></div>
-    <h2><?php _e( 'CSV to DB', 'csv2db' ); ?></h2>
+    <h2><?php _e( 'CSV To DB', 'csv2db' ); ?></h2>
 	<?php if ( $this->message ) : ?>
         <div class="updated <?php if ( $error ) {
 			echo 'error';

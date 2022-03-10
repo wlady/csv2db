@@ -1,6 +1,6 @@
 <div class="wrap ">
     <div id="icon-options-general" class="icon32"><br/></div>
-    <h2><?php _e( 'CSV to DB Items', 'csv2db' ); ?></h2>
+    <h2><?php _e( 'CSV To DB Items', 'csv2db' ); ?></h2>
     <table id="table"
            data-toggle="table"
            data-ajax="ajaxRequest"

@@ -2,7 +2,7 @@
 /**
  * Plugin Name: CSV To DB
  * Plugin URI: https://github.com/wlady
- * Description: Build landing page just in a couple of clicks
+ * Description: Import CSV file into DB
  * Author: Vladimir Zabara <wlady2001@gmail.com>
  * Author URI: https://github.com/wlady
  * Version: 2.0.0

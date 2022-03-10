@@ -1,10 +1,10 @@
-# Copyright (C) 2022 
-# This file is distributed under the same license as the  package.
+# Copyright (C) 2022 CSV To DB
+# This file is distributed under the same license as the CSV To DB package.
 msgid ""
 msgstr ""
-"Project-Id-Version:  \n"
-"Report-Msgid-Bugs-To: http://wordpress.org/tag/quick-site-builder-master\n"
-"POT-Creation-Date: 2022-03-08 15:00:57+00:00\n"
+"Project-Id-Version: CSV To DB 2.0.0\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/csv-to-db\n"
+"POT-Creation-Date: 2022-03-10 11:26:36+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -12,255 +12,290 @@ msgstr ""
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 
-#: src/QSB/Controllers/Admin.php:111 src/QSB/Controllers/Admin.php:112
-#: src/QSB/Controllers/Admin.php:135
+#: src/CSV2DB/Controllers/Admin.php:118 src/CSV2DB/Controllers/Admin.php:119
+#: src/CSV2DB/Controllers/Admin.php:160 src/CSV2DB/Controllers/Admin.php:161
 msgid "Settings"
 msgstr ""
 
-#: src/QSB/Controllers/Admin.php:125 src/views/error.php:2
+#. #-#-#-#-#  csv2db.pot (CSV To DB 2.0.0)  #-#-#-#-#
+#. Plugin Name of the plugin/theme
+#: src/CSV2DB/Controllers/Admin.php:133 src/CSV2DB/Controllers/Admin.php:134
+#: src/views/error.php:2 src/views/fields.php:3 src/views/import.php:2
+#: src/views/options.php:2
 msgid "CSV To DB"
 msgstr ""
 
-#: src/QSB/Controllers/Admin.php:130
+#: src/CSV2DB/Controllers/Admin.php:142 src/CSV2DB/Controllers/Admin.php:143
+#: src/views/fields.php:190 src/views/import.php:41 src/views/import.php:53
 msgid "Import"
 msgstr ""
 
-#: src/QSB/Controllers/Admin.php:261
-msgid "Resend Landing Template"
+#: src/CSV2DB/Controllers/Admin.php:151 src/CSV2DB/Controllers/Admin.php:152
+#: src/views/fields.php:15
+msgid "Fields"
 msgstr ""
 
-#: src/QSB/Controllers/Front.php:170 src/views/edit-button.php:2
-msgid "Edit Template"
+#: src/CSV2DB/Controllers/Admin.php:191 src/CSV2DB/Controllers/Admin.php:392
+msgid "Success!"
 msgstr ""
 
-#: src/QSB/Functions.php:42
-msgid "Template Blocks"
+#: src/CSV2DB/Controllers/Admin.php:216
+msgid "Cannot read from CSV"
 msgstr ""
 
-#: src/QSB/Functions.php:74
-msgid "Template Tips"
+#: src/CSV2DB/Controllers/Admin.php:224
+msgid "Cannot detect fields"
 msgstr ""
 
-#: src/QSB/Functions.php:656
-msgid "Try it out"
+#: src/CSV2DB/Controllers/Admin.php:236
+msgid "Success! Reloading..."
 msgstr ""
 
-#: src/QSB/Helper.php:111
+#: src/CSV2DB/Controllers/Admin.php:327
+msgid ""
+"Fields undefined! Click <a href=\"admin.php?page=wp-csv-to-db-fields"
+"\">Fields</a> to prepare fields."
+msgstr ""
+
+#: src/CSV2DB/Controllers/Admin.php:353
+msgid ""
+"Columns undefined! Click <a href=\"admin.php?page=wp-csv-to-db-fields"
+"\">Fields</a> to prepare columns."
+msgstr ""
+
+#: src/CSV2DB/Controllers/Admin.php:395
+msgid "Wrong file format"
+msgstr ""
+
+#: src/CSV2DB/Helper.php:63
 msgid "<strong>CSV To DB</strong> requires PHP version %s or later."
 msgstr ""
 
-#: src/QSB/Helper.php:122
-msgid ""
-"<strong>CSV To DB</strong> requires WordPress version %s or later."
+#: src/CSV2DB/Helper.php:74
+msgid "<strong>CSV To DB</strong> requires WordPress version %s or later."
 msgstr ""
 
-#: src/QSB/Helper.php:133
-msgid "<strong>CSV To DB</strong> requires WooCommerce to be active."
+#: src/CSV2DB/Models/File.php:23 src/views/fields.php:233
+#: src/views/import.php:57
+msgid "File size is too big!"
 msgstr ""
 
-#: src/QSB/Helper.php:141
-msgid ""
-"<strong>CSV To DB</strong> requires WooCommerce version %s or later."
+#: src/CSV2DB/Models/File.php:32 src/views/fields.php:231
+#: src/views/import.php:55
+msgid "Unsupported File!"
 msgstr ""
 
-#: src/QSB/Helper.php:152
-msgid ""
-"<strong>CSV To DB</strong> requires Media Library Categories to be "
-"active."
+#: src/CSV2DB/Models/File.php:44
+msgid "Error uploading File!"
 msgstr ""
 
-#: src/QSB/Helper.php:160
-msgid ""
-"<strong>CSV To DB</strong> requires Media Library Categories "
-"version %s or later."
+#: src/CSV2DB/Models/File.php:47
+msgid "Something wrong with upload! Is \"upload_max_filesize\" set correctly?"
 msgstr ""
 
-#: src/QSB/Models/Landing.php:128
-msgid "Error parsing config file: %s"
+#: src/CSV2DB/Models/Table.php:66
+msgid "Column configuration is empty"
 msgstr ""
 
-#: src/QSB/Models/Landing.php:142
-msgid "Config property %s is not set in config file"
-msgstr ""
-
-#: src/QSB/Models/Landing.php:155
-msgid "Error reading screenshot "
-msgstr ""
-
-#: src/QSB/Models/Landing.php:164
-msgid "Landing blocks not set in config file"
-msgstr ""
-
-#: src/views/download-link.php:3
-msgid "Visit Your Site"
-msgstr ""
-
-#: src/views/download-link.php:4 src/views/view-link.php:2
-msgid "Click here"
-msgstr ""
-
-#: src/views/download-link.php:7
-msgid "Zip Archive"
-msgstr ""
-
-#: src/views/download-link.php:8
-msgid "Download"
-msgstr ""
-
-#: src/views/editor.php:8
-msgid "CSV To DB - Page Editor"
-msgstr ""
-
-#: src/views/editor.php:119
-msgid "Save"
-msgstr ""
-
-#: src/views/editor.php:120
-msgid "Preview"
-msgstr ""
-
-#: src/views/editor.php:188 src/views/editor.php:189
-msgid "Fill required fields"
-msgstr ""
-
-#: src/views/import.php:3
-msgid "Add Landing Template"
-msgstr ""
-
-#: src/views/import.php:9
-msgid "Upload file"
-msgstr ""
-
-#: src/views/input.php:47 src/views/input.php:73
-msgid "Datei Aaswählen"
-msgstr ""
-
-#: src/views/items.php:3
-msgid "CSV To DB Landings"
-msgstr ""
-
-#: src/views/items.php:5
-msgid "Import Template"
-msgstr ""
-
-#: src/views/items.php:6
-msgid "Delete"
-msgstr ""
-
-#: src/views/items.php:25
+#: src/views/fields.php:19
 msgid "Name"
 msgstr ""
 
-#: src/views/items.php:26
-msgid "Blocks"
+#: src/views/fields.php:22
+msgid "Type"
 msgstr ""
 
-#: src/views/items.php:27
-msgid "Created"
+#: src/views/fields.php:25
+msgid "Size"
 msgstr ""
 
-#: src/views/items.php:34
-msgid "Are you sure?"
+#: src/views/fields.php:28
+msgid "Null"
 msgstr ""
 
-#: src/views/options.php:2
-msgid "CSV To DB Settings"
+#: src/views/fields.php:31
+msgid "AI"
 msgstr ""
 
-#: src/views/options.php:4
-msgid "General"
+#: src/views/fields.php:34
+msgid "Index"
 msgstr ""
 
-#: src/views/options.php:5
-msgid "Email"
+#: src/views/fields.php:37
+msgid "Title"
 msgstr ""
 
-#: src/views/options.php:6
-msgid "Screenshots"
+#: src/views/fields.php:40
+msgid "Show"
 msgstr ""
 
-#: src/views/options.php:15
-msgid "Debug"
+#: src/views/fields.php:43
+msgid "Align"
 msgstr ""
 
-#: src/views/options.php:24
-msgid "Tips Category"
+#: src/views/fields.php:46
+msgid "Check"
 msgstr ""
 
-#: src/views/options.php:37
-msgid "Google Map API Key"
+#: src/views/fields.php:133
+msgid "Left"
 msgstr ""
 
-#: src/views/options.php:47
-msgid "Enabled HTML tags"
+#: src/views/fields.php:136
+msgid "Center"
 msgstr ""
 
-#: src/views/options.php:57
-msgid "Days to keep sites"
+#: src/views/fields.php:139
+msgid "Right"
 msgstr ""
 
-#: src/views/options.php:63
-msgid "How long to keep generated sites, in days"
-msgstr ""
-
-#: src/views/options.php:68 src/views/options.php:115 src/views/options.php:168
+#: src/views/fields.php:154 src/views/options.php:67
 msgid "Save Changes"
 msgstr ""
 
-#: src/views/options.php:77
-msgid "From Name"
+#: src/views/fields.php:156
+msgid "Save fields configuration"
 msgstr ""
 
-#: src/views/options.php:87
-msgid "From Email"
+#: src/views/fields.php:158
+msgid "Export Fields"
 msgstr ""
 
-#: src/views/options.php:97
-msgid "Subject"
+#: src/views/fields.php:159
+msgid "Export fields configuration"
 msgstr ""
 
-#: src/views/options.php:107
-msgid "Email Text"
+#: src/views/fields.php:161
+msgid "Clear Fields"
 msgstr ""
 
-#: src/views/options.php:124
-msgid "URL Parameters"
+#: src/views/fields.php:163
+msgid "Clear fields"
 msgstr ""
 
-#: src/views/options.php:130
-msgid ""
-"Additional URL parameters to generate screenshot for preview, E.g. ?css-"
-"animation=false "
+#: src/views/fields.php:165
+msgid "Create DB Table"
 msgstr ""
 
-#: src/views/options.php:135
-msgid "Screenshot width"
+#: src/views/fields.php:167
+msgid "Create DB Table from current fields configuration"
 msgstr ""
 
-#: src/views/options.php:141
-msgid "You can set comma separated list, E.g. 1920,800,320"
+#: src/views/fields.php:169
+msgid "Export Schema"
 msgstr ""
 
-#: src/views/options.php:146
-msgid "Image Quality"
+#: src/views/fields.php:170
+msgid "Export DB schema"
 msgstr ""
 
-#: src/views/options.php:152
-msgid "JPEG image quality, 0-100"
+#: src/views/fields.php:178
+msgid "Import Fields"
 msgstr ""
 
-#: src/views/options.php:157
-msgid "JavaScript Delay"
+#: src/views/fields.php:182
+msgid "Data File"
 msgstr ""
 
-#: src/views/options.php:163
-msgid "Delay JS execution in milliseconds"
+#: src/views/fields.php:192
+msgid "Import fields configuration"
 msgstr ""
 
-#: src/views/options.php:177
+#: src/views/fields.php:203
+msgid "Analyze CSV"
+msgstr ""
+
+#: src/views/fields.php:207 src/views/import.php:17
+msgid "CSV File"
+msgstr ""
+
+#: src/views/fields.php:215
+msgid "Analyze"
+msgstr ""
+
+#: src/views/fields.php:217
+msgid "Analyze CSV file and create the fields configuration"
+msgstr ""
+
+#: src/views/fields.php:228 src/views/import.php:52
+msgid "Are you sure?"
+msgstr ""
+
+#: src/views/fields.php:229
+msgid "Upload"
+msgstr ""
+
+#: src/views/fields.php:230 src/views/import.php:54
+msgid "Your browser does not support new File API! Please upgrade."
+msgstr ""
+
+#: src/views/fields.php:232 src/views/import.php:56
+msgid "Limit Exceeded!"
+msgstr ""
+
+#: src/views/fields.php:234 src/views/import.php:58
+msgid "Please Wait..."
+msgstr ""
+
+#: src/views/import.php:13
+msgid "CSV Import"
+msgstr ""
+
+#: src/views/import.php:25
+msgid "Skip first rows"
+msgstr ""
+
+#: src/views/import.php:33
+msgid "Re-Create table"
+msgstr ""
+
+#: src/views/import.php:42
+msgid "Import CSV file"
+msgstr ""
+
+#: src/views/items.php:3
+msgid "CSV To DB Items"
+msgstr ""
+
+#: src/views/options.php:5
+msgid "CSV Import Options"
+msgstr ""
+
+#: src/views/options.php:9
+msgid "Use LOCAL"
+msgstr ""
+
+#: src/views/options.php:18
+msgid "Fields Terminated By"
+msgstr ""
+
+#: src/views/options.php:28
+msgid "Fields Enclosed By"
+msgstr ""
+
+#: src/views/options.php:38
+msgid "Fields Escaped By"
+msgstr ""
+
+#: src/views/options.php:48
+msgid "Lines Starting By"
+msgstr ""
+
+#: src/views/options.php:57
+msgid "Lines Terminated By"
+msgstr ""
+
+#: src/views/options.php:69
+msgid "Reset to Defaults"
+msgstr ""
+
+#: src/views/options.php:75
 msgid "Are you sure to reset CSV To DB settings?"
 msgstr ""
 
-#: src/views/view-link.php:2
-msgid "View Generated Landing"
+#. #-#-#-#-#  csv2db.pot (CSV To DB 2.0.0)  #-#-#-#-#
+#. Plugin URI of the plugin/theme
+#. #-#-#-#-#  csv2db.pot (CSV To DB 2.0.0)  #-#-#-#-#
+#. Author URI of the plugin/theme
+msgid "https://github.com/wlady"
 msgstr ""
