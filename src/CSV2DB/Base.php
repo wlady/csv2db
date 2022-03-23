@@ -42,7 +42,7 @@ class Base {
 		}
 		$this->controller->init();
 		if ( isset( $_POST['action'] ) ) {
-			$this->controller->dispatch( __( $_POST['action'] ) );
+			$this->controller->dispatch( sanitize_text_field( $_POST['action'] ) );
 		}
 	}
 
