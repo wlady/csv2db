@@ -4,27 +4,28 @@
  * User: Vladimir Zabara <wlady2001@gmail.com>
  * Date: 10.03.22
  * Time: 10:15
+ * phpcs:ignoreFile
  */
 
 namespace CSV2DB\Models;
 
 class Table {
-	const TABLE_NAME = 'csv_to_db';
-
 	/**
 	 * Create DB table from saved configuration
+	 *
+	 * @param array $fields
+	 *
 	 * @return string/bool On error returns error message
 	 */
-	public static function create_table( $fields ) {
+	public static function create_table( array $fields = [] ) {
 		global $wpdb;
 
-		$wpdb->query( 'DROP TABLE IF EXISTS `' . $wpdb->get_blog_prefix() . self::TABLE_NAME . '`' );
+		$wpdb->query( $wpdb->prepare( 'DROP TABLE IF EXISTS `' . $wpdb->get_blog_prefix() . 'csv_to_db`' ) );
 		try {
-			$schema = self::create_schema( $fields );
+			$wpdb->query( $wpdb->prepare( self::create_schema( $fields ) ) );
 		} catch ( \Exception $e ) {
 			return $e->getMessage();
 		}
-		$wpdb->query( $schema );
 
 		return $wpdb->last_error !== '' ? $wpdb->last_error : true;
 	}
@@ -63,10 +64,10 @@ class Table {
 			$columns = array_merge( $columns, $indexes );
 		}
 		if ( ! count( $columns ) ) {
-			throw new \Exception( \__( 'Column configuration is empty', 'csv-to-db' ) );
+			throw new \Exception( __( 'Column configuration is empty', 'csv-to-db' ) );
 		}
 
-		return 'CREATE TABLE IF NOT EXISTS `' . $wpdb->get_blog_prefix() . self::TABLE_NAME . '` (' . implode( ',', $columns ) . ')';
+		return 'CREATE TABLE IF NOT EXISTS `' . $wpdb->get_blog_prefix() . 'csv_to_db` (' . implode( ',', $columns ) . ')';
 	}
 
 	/**
@@ -74,10 +75,13 @@ class Table {
 	 *
 	 * @return mix On error returns error message
 	 */
-	public static function import_file( $file_name, $options ) {
+	public static function import_file( $file_name, $options, $skip_lines = 0 ) {
 		global $wpdb;
 
 		$use_local     = $options['use-local'] == 1 ? 'LOCAL' : '';
+		if ( $use_local ) {
+			$wpdb->query( $wpdb->prepare( 'SET GLOBAL local_infile=1;' ) );
+		}
 		$fields_params = [];
 		$lines_params  = [];
 		if ( ! empty( $options['fields-terminated'] ) ) {
@@ -98,17 +102,17 @@ class Table {
 		if ( ! empty( $options['lines-terminated'] ) ) {
 			$lines_params[] = 'TERMINATED BY \'' . $options['lines-terminated'] . '\'';
 		}
-		$query = 'LOAD DATA ' . $use_local . ' INFILE \'' . $file_name . '\' INTO TABLE `' . $wpdb->get_blog_prefix() . self::TABLE_NAME . '`';
+		$query = 'LOAD DATA ' . $use_local . ' INFILE %s INTO TABLE `' . $wpdb->get_blog_prefix() . 'csv_to_db`';
 		if ( count( $fields_params ) ) {
 			$query .= ' FIELDS ' . implode( ' ', $fields_params );
 		}
 		if ( count( $lines_params ) ) {
 			$query .= ' LINES ' . implode( ' ', $lines_params );
 		}
-		if ( intval( $_POST['skip-rows'] ) > 0 ) {
-			$query .= ' IGNORE ' . intval( $_POST['skip-rows'] ) . ' LINES';
+		if ( $skip_lines > 0 ) {
+			$query .= ' IGNORE ' . $skip_lines . ' LINES';
 		}
-		$wpdb->query( $query );
+		$wpdb->query( $wpdb->prepare( $query, $file_name ) );
 
 		return $wpdb->last_error !== '' ? $wpdb->last_error : true;
 	}
@@ -125,8 +129,12 @@ class Table {
 	public static function get_items( $columns, $fields, $start = 0, $limit = 10, $order = 'asc' ) {
 		global $wpdb;
 
-		$res   = $wpdb->get_results( 'SELECT SQL_CALC_FOUND_ROWS `' . implode( '`,`',
-				$fields ) . '` FROM `' . $wpdb->get_blog_prefix() . self::TABLE_NAME . '` LIMIT ' . "{$start}, {$limit}" );
+		$res   = $wpdb->get_results(
+			$wpdb->prepare( 'SELECT SQL_CALC_FOUND_ROWS `' . implode( '`,`', $fields )
+			                . '` FROM `' . $wpdb->get_blog_prefix() . 'csv_to_db` LIMIT %d,%d',
+				$start,
+				$limit )
+		);
 		$total = $wpdb->get_var( 'SELECT FOUND_ROWS() AS total' );
 		$rows  = self::convert_fields( $columns, $res );
 
@@ -176,6 +184,6 @@ class Table {
 	public static function drop_tables() {
 		global $wpdb;
 
-		$wpdb->query( 'DROP TABLE IF EXISTS `' . $wpdb->get_blog_prefix() . self::TABLE_NAME . '`' );
+		$wpdb->query( $wpdb->prepare('DROP TABLE IF EXISTS `' . $wpdb->get_blog_prefix() . 'csv_to_db`' ) );
 	}
 }

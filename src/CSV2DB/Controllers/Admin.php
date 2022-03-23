@@ -94,7 +94,7 @@ class Admin extends Options {
 			if ( method_exists( $this, $method ) ) {
 				$this->$method();
 			} else {
-				throw new \Exception( \__( 'Method ' . $method . ' was not found', 'csv2db' ) );
+				throw new \Exception( __( 'Method ' . $method . ' was not found', 'csv2db' ) );
 			}
 		}
 	}
@@ -104,6 +104,11 @@ class Admin extends Options {
 	 */
 	public function admin_init_hook() {
 		\register_setting( 'csv2db', 'csv2db', [ $this, 'update' ] );
+		\wp_enqueue_script( 'jquery' );
+		\wp_localize_script( 'jquery', 'ajax', [
+			'url'   => admin_url( 'admin-ajax.php' ),
+			'nonce' => wp_create_nonce( 'csv2db_ajax_nonce' ),
+		] );
 	}
 
 	/**
@@ -130,8 +135,8 @@ class Admin extends Options {
 	public function admin_menu_hook() {
 		if ( \current_user_can( 'manage_options' ) ) {
 			\add_menu_page(
-				\__( 'CSV To DB', 'csv2db' ),
-				\__( 'CSV To DB', 'csv2db' ),
+				__( 'CSV To DB', 'csv2db' ),
+				__( 'CSV To DB', 'csv2db' ),
 				'manage_options',
 				'wp-csv-to-db', [
 				$this,
@@ -139,8 +144,8 @@ class Admin extends Options {
 			], 'dashicons-book-alt' );
 			\add_submenu_page(
 				'wp-csv-to-db',
-				\__( 'Import', 'csv2db' ),
-				\__( 'Import', 'csv2db' ),
+				__( 'Import', 'csv2db' ),
+				__( 'Import', 'csv2db' ),
 				'manage_options',
 				'wp-csv-to-db-import', [
 				$this,
@@ -148,8 +153,8 @@ class Admin extends Options {
 			] );
 			\add_submenu_page(
 				'wp-csv-to-db',
-				\__( 'Fields', 'csv2db' ),
-				\__( 'Fields', 'csv2db' ),
+				__( 'Fields', 'csv2db' ),
+				__( 'Fields', 'csv2db' ),
 				'manage_options',
 				'wp-csv-to-db-fields', [
 				$this,
@@ -157,8 +162,8 @@ class Admin extends Options {
 			] );
 			\add_submenu_page(
 				'wp-csv-to-db',
-				\__( 'Settings', 'csv2db' ),
-				\__( 'Settings', 'csv2db' ),
+				__( 'Settings', 'csv2db' ),
+				__( 'Settings', 'csv2db' ),
 				'manage_options',
 				'wp-csv-to-db-settings', [
 				$this,
@@ -174,21 +179,28 @@ class Admin extends Options {
 	 */
 	public function wp_ajax_import_csv_hook() {
 		try {
+			if ( ! check_ajax_referer( 'import-csv' ) ) {
+				throw new \Exception( __( 'Operation is not permitted', 'csv2db' ) );
+			}
 			$tmp_file_name = File::upload_file();
 			if ( $tmp_file_name ) {
 				if ( isset( $_POST['re-create'] ) ) {
 					$res = Table::create_table( $this->options['fields'] );
 					if ( is_string( $res ) ) {
-						throw new \Exception( htmlspecialchars( $res, ENT_QUOTES ) );
+						throw new \Exception( __( $res ) );
 					}
 				}
-				$res = Table::import_file( $tmp_file_name, $this->options );
+				$skip_lines = 0;
+				if ( isset( $_POST['skip-rows'] ) ) {
+					$skip_lines = intval( sanitize_text_field( $_POST['skip-rows'] ) );
+				}
+				$res = Table::import_file( $tmp_file_name, $this->options, $skip_lines );
 				if ( is_string( $res ) ) {
-					throw new \Exception( htmlspecialchars( $res, ENT_QUOTES ) );
+					throw new \Exception( __( $res ) );
 				} else {
 					$results = [
 						'success' => true,
-						'message' => \__( 'Success!', 'csv2db' ),
+						'message' => __( 'Success!', 'csv2db' ),
 					];
 				}
 			}
@@ -208,20 +220,22 @@ class Admin extends Options {
 	 * @Hook wp_ajax_analyze_csv
 	 */
 	public function wp_ajax_analyze_csv_hook() {
+		global $wp_filesystem;
 		try {
+			if ( ! check_ajax_referer( 'csv2db-options' ) ) {
+				throw new \Exception( __( 'Operation is not permitted', 'csv2db' ) );
+			}
 			$tmp_file_name = File::upload_file();
-			if ( $tmp_file_name ) {
-				$fp = fopen( $tmp_file_name, 'r' );
-				if ( ! $fp ) {
-					throw new \Exception( \__( 'Cannot read from CSV', 'csv2db' ) );
-				}
-				$fields = fgetcsv( $fp, 0,
+			if ( $tmp_file_name && $this->check_fs() ) {
+				$data   = $wp_filesystem->get_contents_array( $tmp_file_name );
+				$fields = str_getcsv(
+					$data[0] ?? '',
 					$this->get_option( 'fields-terminated' ),
 					$this->get_option( 'fields-enclosed' ),
 					stripslashes( $this->get_option( 'fields-escaped' ) )
 				);
 				if ( ! $fields || ! count( $fields ) ) {
-					throw new \Exception( \__( 'Cannot detect fields', 'csv2db' ) );
+					throw new \Exception( __( 'Cannot detect fields', 'csv2db' ) );
 				} else {
 					// save fields
 					$fields_data = [];
@@ -229,11 +243,11 @@ class Admin extends Options {
 						$fields_data[] = $this->generate_empty_field( $field );
 					}
 					$this->options['fields'] = $fields_data;
-					\update_option( self::OPTIONS_NAME, $this->options );
+					$res =\update_option( self::OPTIONS_NAME, $this->options );
 					$results = [
 						'success' => true,
 						'data'    => $fields,
-						'message' => \__( 'Success! Reloading...', 'csv2db' ),
+						'message' => __( 'Success! Reloading...', 'csv2db' ),
 					];
 				}
 			}
@@ -257,20 +271,22 @@ class Admin extends Options {
 			'total' => 0,
 			'rows'  => [],
 		];
-		$columns = $this->collect_columns_to_show( $skip_auto_generated = true );
-		if ( count( $columns ) ) {
-			$start = (int) filter_var( $_POST['offset'], FILTER_SANITIZE_NUMBER_INT );
-			$limit = (int) filter_var( $_POST['limit'], FILTER_SANITIZE_NUMBER_INT );
-			if ( ! $limit ) {
-				$limit = 10;
+		if ( check_ajax_referer( 'items-table' ) ) {
+			$columns = $this->collect_columns_to_show( $skip_auto_generated = true );
+			if ( count( $columns ) ) {
+				$start = intval( $_POST['offset'] ?? 0 );
+				$limit = intval( $_POST['limit'] ?? 10 );
+				if ( ! $limit ) {
+					$limit = 10;
+				}
+				$order  = sanitize_text_field( $_POST['order'] ?? 'asc' );
+				$fields = array_column( $columns, 'name' );
+				[ $total, $rows ] = Table::get_items( $columns, $fields, $start, $limit, $order );
+				$results = [
+					'total' => (int) $total,
+					'rows'  => (array) $rows,
+				];
 			}
-			$order  = filter_var( $_POST['order'], FILTER_SANITIZE_STRING );
-			$fields = array_column( $columns, 'name' );
-			[ $total, $rows ] = Table::get_items( $columns, $fields, $start, $limit, $order );
-			$results = [
-				'total' => (int) $total,
-				'rows'  => (array) $rows,
-			];
 		}
 		$this->parse_view( 'json', $results );
 	}
@@ -285,7 +301,10 @@ class Admin extends Options {
 		$checked = false;
 		if ( ! empty( $this->options['fields'] ) ) {
 			foreach ( $this->options['fields'] as $field ) {
-				if ( isset( $field['show'] ) && ! empty( $field['title'] ) ) {
+				if ( ! empty( $field['show'] ) ) {
+					if ( empty( $field['title'] ) ) {
+						$field['title'] = $field['name'];
+					}
 					$columns[] = $field;
 					if ( isset( $field['check'] ) ) {
 						$this->data_id_field = $field['name'];
@@ -324,7 +343,7 @@ class Admin extends Options {
 	 */
 	public function import_page_action() {
 		if ( empty( $this->options['fields'] ) ) {
-			$this->message = \__( 'Fields undefined! Click <a href="admin.php?page=wp-csv-to-db-fields">Fields</a> to prepare fields.',
+			$this->message = __( 'Fields undefined! Click <a href="admin.php?page=wp-csv-to-db-fields">Fields</a> to prepare fields.',
 				'csv2db' );
 
 			return $this->parse_view( 'error' );
@@ -350,7 +369,7 @@ class Admin extends Options {
 	public function items_page_action() {
 		$columns = $this->collect_columns_to_show();
 		if ( ! count( $columns ) ) {
-			$this->message = \__( 'Columns undefined! Click <a href="admin.php?page=wp-csv-to-db-fields">Fields</a> to prepare columns.',
+			$this->message = __( 'Columns undefined! Click <a href="' . admin_url( 'admin.php?page=wp-csv-to-db-fields' ) . '">Fields</a> to prepare columns.',
 				'csv2db' );
 
 			return $this->parse_view( 'error' );
@@ -361,18 +380,25 @@ class Admin extends Options {
 
 	/**
 	 * @Action create_table
+	 * @throws \Exception
 	 */
 	public function create_table_action() {
+		if ( ! check_admin_referer( 'csv2db-options' ) ) {
+			throw new \Exception( __( 'Operation is not permitted', 'csv2db' ) );
+		}
 		$this->save_fields_action();
-
 		Table::create_table( $this->options['fields'] );
 	}
 
 	/**
 	 * @Action save_fields
+	 * @throws \Exception
 	 */
 	public function save_fields_action() {
-		$this->options['fields'] = $_POST['csv2db']['fields'];
+		if ( ! check_admin_referer( 'csv2db-options' ) ) {
+			throw new \Exception( __( 'Operation is not permitted', 'csv2db' ) );
+		}
+		$this->options['fields'] = $_POST['csv2db']['fields'] ?? []; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 		\update_option( self::OPTIONS_NAME, $this->options );
 	}
 
@@ -380,16 +406,20 @@ class Admin extends Options {
 	 * @Action import_fields
 	 */
 	public function import_fields_action() {
+		global $wp_filesystem;
 		try {
+			if ( ! check_ajax_referer( 'csv2db-options' ) ) {
+				throw new \Exception( __( 'Operation is not permitted', 'csv2db' ) );
+			}
 			$tmp_file_name = File::upload_file();
-			if ( $tmp_file_name ) {
-				$content = unserialize( file_get_contents( $tmp_file_name ) );
+			if ( $tmp_file_name && $this->check_fs() ) {
+				$content = json_decode( $wp_filesystem->get_contents( $tmp_file_name ), true );
 				if ( $content ) {
 					$this->options['fields'] = $content;
 					\update_option( self::OPTIONS_NAME, $this->options );
 					$results = [
 						'success' => true,
-						'message' => \__( 'Success!', 'csv2db' ),
+						'message' => __( 'Success!', 'csv2db' ),
 					];
 				} else {
 					throw new \Exception( __( 'Wrong file format' ) );
@@ -409,6 +439,9 @@ class Admin extends Options {
 	 * @Action clear_fields
 	 */
 	public function clear_fields_action() {
+		if ( ! check_admin_referer( 'csv2db-options' ) ) {
+			throw new \Exception( __( 'Operation is not permitted', 'csv2db' ) );
+		}
 		$this->options['fields'] = [];
 		\update_option( self::OPTIONS_NAME, $this->options );
 	}
@@ -418,7 +451,7 @@ class Admin extends Options {
 	 */
 	public function export_fields_action() {
 		$this->save_fields_action();
-		$content = serialize( $this->options['fields'] );
+		$content = \wp_json_encode( $this->options['fields'] );
 		$this->parse_view( 'attachment', [ 'content' => $content, 'filename' => 'csv-to-db-fields.txt' ] );
 	}
 
@@ -436,5 +469,22 @@ class Admin extends Options {
 
 EOC;
 		$this->parse_view( 'attachment', [ 'content' => $content, 'filename' => 'csv-to-db-schema.sql' ] );
+	}
+
+	private function check_fs() {
+		$url = wp_nonce_url( 'plugins.php' );
+		if ( false === ( $creds = \request_filesystem_credentials( $url, '', false, false, null ) ) ) {
+			_e( 'Could not create filesystem credentials' );
+
+			return false;
+		}
+		if ( ! \WP_Filesystem( $creds ) ) {
+			\request_filesystem_credentials( $url, '', true, false, null );
+			_e( 'Filesystem credentials were not available' );
+
+			return false;
+		}
+
+		return true;
 	}
 }

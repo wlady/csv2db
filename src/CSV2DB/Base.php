@@ -4,6 +4,7 @@
  * User: Vladimir Zabara <wlady2001@gmail.com>
  * Date: 10.03.22
  * Time: 10:15
+ * phpcs:ignoreFile
  */
 
 namespace CSV2DB;
@@ -27,11 +28,9 @@ class Base {
 	 * @access public
 	 */
 	public function on_plugins_loaded() {
-		if ( ! Helper::check_environment() ) {
-			return;
+		if ( Helper::check_environment() ) {
+			$this->init();
 		}
-
-		$this->init();
 	}
 
 	public function init() {
@@ -43,7 +42,7 @@ class Base {
 		}
 		$this->controller->init();
 		if ( isset( $_POST['action'] ) ) {
-			$this->controller->dispatch( $_POST['action'] );
+			$this->controller->dispatch( __( $_POST['action'] ) );
 		}
 	}
 

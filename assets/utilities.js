@@ -55,6 +55,7 @@ function importItemsBtnCallback(res){
     }
     jQuery(result_output).removeClass('hidden');
     jQuery(my_button_id).val(labels.import).prop( "disabled", false);
+    jQuery(progress_bar_wrapper).addClass('hidden');
 }
 
 function uploadBtnCallback(res){
@@ -86,6 +87,7 @@ function importFieldsBtnCallback(res){
     }
     jQuery(result_output).removeClass('hidden');
     jQuery(button_id).val(labels.upload).prop( "disabled", false);
+    jQuery(progress_bar_wrapper).addClass('hidden');
 }
 
 function uploadFile(callbackFn) {

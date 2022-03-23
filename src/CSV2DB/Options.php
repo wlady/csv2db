@@ -63,6 +63,7 @@ class Options extends Base {
 
 	/**
 	 * Called on uninstall
+	 * @throws \Exception
 	 */
 	public static function purge_options() {
 		\delete_option( self::OPTIONS_NAME );
@@ -93,8 +94,12 @@ class Options extends Base {
 	 * @param mixed $options
 	 *
 	 * @return array
+	 * @throws \Exception
 	 */
 	public function update( $options ) {
+		if ( ! check_admin_referer( 'csv2db-options' ) ) {
+			throw new \Exception( __( 'Operation is not permitted', 'csv2db' ) );
+		}
 		if ( isset( $_POST['csv2db-defaults'] ) ) {
 			$this->options = $this->defaults();
 		} else {

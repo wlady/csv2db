@@ -34,6 +34,10 @@ define( 'CSV2DB_PLUGIN_NAME', plugin_basename( __FILE__ ) );
 
 include( dirname( __FILE__ ) . '/vendor/autoload.php' );
 
+if ( ! function_exists( 'request_filesystem_credentials' ) ) {
+	require_once ABSPATH . 'wp-admin/includes/file.php';
+}
+
 $config = [
 	'plugin_file'     => __FILE__,
 	'plugin_basename' => CSV2DB_PLUGIN_NAME,

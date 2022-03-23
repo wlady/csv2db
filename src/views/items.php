@@ -1,13 +1,14 @@
 <div class="wrap ">
+	<?php wp_nonce_field( 'items-table' ); ?>
     <div id="icon-options-general" class="icon32"><br/></div>
-    <h2><?php _e( 'CSV To DB Items', 'csv2db' ); ?></h2>
+    <h2><?php esc_html_e( 'CSV To DB Items', 'csv2db' ); ?></h2>
     <table id="table"
            data-toggle="table"
            data-ajax="ajaxRequest"
            data-show-refresh="true"
            data-show-columns="true"
            data-show-export="true"
-           data-id-field="<?php echo $this->data_id_field; ?>"
+           data-id-field="<?php esc_attr_e( $this->data_id_field ); ?>"
            data-striped="true"
            data-side-pagination="server"
            data-pagination="true"
@@ -16,9 +17,9 @@
         <thead>
         <tr>
 			<?php foreach ( $data['columns'] as $column ) : ?>
-                <th data-field="<?php echo $column['name']; ?>"
+                <th data-field="<?php esc_attr_e( $column['name'] ); ?>"
 				    <?php if ( isset( $column['check'] ) ) : ?>data-checkbox="true"<?php endif; ?>
-                    data-align="<?php echo $column['align']; ?>"><?php echo $column['title']; ?></th>
+                    data-align="<?php esc_attr_e( $column['align'] ); ?>"><?php esc_html_e( $column['title'] ); ?></th>
 			<?php endforeach; ?>
         </tr>
         </thead>
@@ -38,8 +39,9 @@
     // your custom ajax request here
     function ajaxRequest(params) {
         params.data['action'] = 'get_items';
+        params.data['_ajax_nonce'] = jQuery('#_wpnonce').val();
         var jsonDataCall = jQuery.ajax({
-            url: ajaxurl,
+            url: ajax.url,
             method: "POST",
             dataType: "json",
             data: params.data,
