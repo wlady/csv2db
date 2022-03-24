@@ -8,6 +8,7 @@
            data-show-refresh="true"
            data-show-columns="true"
            data-show-export="true"
+           data-export-data-type="all"
            data-id-field="<?php esc_attr_e( $this->data_id_field ); ?>"
            data-striped="true"
            data-side-pagination="server"

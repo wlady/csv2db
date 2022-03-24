@@ -37,15 +37,18 @@ class Admin extends Options {
 	// Styles to enqueue (related to plugin directory)
 	private $styles = [
 		'/assets/bootstrap/css/bootstrap.min.css',
+		'/assets/bootstrap-icons/bootstrap-icons.css',
 		'/assets/bootstrap-table/bootstrap-table.css',
 		'/assets/style.css',
 	];
 	// Scripts to enqueue (related to plugin directory)
 	private $scripts = [
+		'/assets/popper.min.js',
 		'/assets/bootstrap/js/bootstrap.min.js',
+		'/assets/tableexport.jquery.plugin/tableExport.min.js',
+		'/assets/tableexport.jquery.plugin/libs/jsPDF/jspdf.umd.min.js',
 		'/assets/bootstrap-table/bootstrap-table.js',
 		'/assets/bootstrap-table/extensions/export/bootstrap-table-export.min.js',
-		'/assets/tableExport.min.js',
 		'/assets/utilities.js',
 	];
 
@@ -460,14 +463,7 @@ class Admin extends Options {
 	 */
 	public function export_schema_action() {
 		$this->save_fields_action();
-		$createTable = Table::create_schema( $this->options['fields'] );
-		$v           = CSV2DB_VERSION;
-		$content     = <<<EOC
-# Schema File v.{$v}
-# Do not edit!!!
-{$createTable};
-
-EOC;
+		$content = Table::create_schema( $this->options['fields'] );
 		$this->parse_view( 'attachment', [ 'content' => $content, 'filename' => 'csv-to-db-schema.sql' ] );
 	}
 
