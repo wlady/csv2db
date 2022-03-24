@@ -36,20 +36,27 @@ class Admin extends Options {
 	];
 	// Styles to enqueue (related to plugin directory)
 	private $styles = [
-		'/assets/bootstrap/css/bootstrap.min.css',
-		'/assets/bootstrap-icons/bootstrap-icons.css',
-		'/assets/bootstrap-table/bootstrap-table.css',
 		'/assets/style.css',
 	];
 	// Scripts to enqueue (related to plugin directory)
 	private $scripts = [
-		'/assets/popper.min.js',
-		'/assets/bootstrap/js/bootstrap.min.js',
-		'/assets/tableexport.jquery.plugin/tableExport.min.js',
-		'/assets/tableexport.jquery.plugin/libs/jsPDF/jspdf.umd.min.js',
-		'/assets/bootstrap-table/bootstrap-table.js',
-		'/assets/bootstrap-table/extensions/export/bootstrap-table-export.min.js',
 		'/assets/utilities.js',
+	];
+	// Online styles to enqueue
+	private $online_styles = [
+		'https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css',
+		'https://unpkg.com/@fortawesome/fontawesome-free@5.12.1/css/all.min.css',
+		'https://unpkg.com/bootstrap-table@1.19.1/dist/bootstrap-table.min.css',
+	];
+	// Online scripts to enqueue
+	private $online_scripts = [
+		'https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js',
+		'https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js',
+		'https://cdn.jsdelivr.net/npm/tableexport.jquery.plugin@1.10.21/tableExport.min.js',
+		'https://cdn.jsdelivr.net/npm/tableexport.jquery.plugin@1.10.21/libs/jsPDF/jspdf.min.js',
+		'https://cdn.jsdelivr.net/npm/tableexport.jquery.plugin@1.10.21/libs/jsPDF-AutoTable/jspdf.plugin.autotable.js',
+		'https://unpkg.com/bootstrap-table@1.19.1/dist/bootstrap-table.min.js',
+		'https://unpkg.com/bootstrap-table@1.19.1/dist/extensions/export/bootstrap-table-export.min.js',
 	];
 
 	public function __construct( $config ) {
@@ -81,6 +88,18 @@ class Admin extends Options {
 				md5( $script ), \plugins_url( $script, $this->config['plugin_basename'] ),
 				[],
 				CSV2DB_VERSION
+			);
+		}
+		// enqueue online styles
+		foreach ( $this->online_styles as $style ) {
+			\wp_enqueue_style(
+				md5( $style ), $style
+			);
+		}
+		// enqueue online scripts
+		foreach ( $this->online_scripts as $script ) {
+			\wp_enqueue_script(
+				md5( $script ), $script
 			);
 		}
 	}
