@@ -15,7 +15,7 @@
 
 namespace CSV2DB;
 
-defined( 'ABSPATH' ) or exit;
+defined( 'ABSPATH' ) || exit;
 
 define( 'CSV2DB_VERSION', '2.0.0' );
 define( 'CSV2DB_SUPPORT_PHP', '7.4' );
@@ -28,8 +28,7 @@ define( 'CSV2DB_PATH', dirname( __FILE__ ) . DIRECTORY_SEPARATOR . 'src' . DIREC
 define( 'CSV2DB_URL', plugin_dir_url( __FILE__ ) . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR );
 define( 'CSV2DB_ASSETS_URL', plugin_dir_url( __FILE__ ) . DIRECTORY_SEPARATOR . 'assets' . DIRECTORY_SEPARATOR );
 define( 'CSV2DB_VENDDOR_URL', plugin_dir_url( __FILE__ ) . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR );
-define( 'CSV2DB_VIEW_PATH',
-	dirname( __FILE__ ) . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR );
+define( 'CSV2DB_VIEW_PATH', dirname( __FILE__ ) . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR );
 define( 'CSV2DB_PLUGIN_NAME', plugin_basename( __FILE__ ) );
 
 include( dirname( __FILE__ ) . '/vendor/autoload.php' );
