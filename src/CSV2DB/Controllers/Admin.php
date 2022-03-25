@@ -404,11 +404,7 @@ class Admin extends Options {
 		$fields = [];
 		if ( ! empty( $_POST['csv2db']['fields'] ) && is_array( $_POST['csv2db']['fields'] ) ) {
 			foreach ( wp_unslash( $_POST['csv2db']['fields'] ) as $field ) {
-				$inputs = [];
-				foreach ( $field as $key => $val ) {
-					$inputs[ $key ] = sanitize_text_field( $val );
-				}
-				$fields[] = $inputs;
+				$fields[] = array_map( 'sanitize_text_field', wp_unslash( $field ) );
 			}
 		}
 		$this->options['fields'] = $fields;
