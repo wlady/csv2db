@@ -402,11 +402,11 @@ class Admin extends Options {
 			throw new \Exception( __( 'Operation is not permitted', 'csv2db' ) );
 		}
 		$fields = [];
-		if ( ! empty( $_POST['csv2db']['fields'] ) && is_array($_POST['csv2db']['fields'])) {
+		if ( ! empty( $_POST['csv2db']['fields'] ) && is_array( $_POST['csv2db']['fields'] ) ) {
 			foreach ( wp_unslash( $_POST['csv2db']['fields'] ) as $field ) {
 				$inputs = [];
 				foreach ( $field as $key => $val ) {
-					$inputs[$key] = sanitize_text_field( $val );
+					$inputs[ $key ] = sanitize_text_field( $val );
 				}
 				$fields[] = $inputs;
 			}
