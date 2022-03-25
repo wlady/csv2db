@@ -31,6 +31,8 @@ class Base {
 		if ( Helper::check_environment() ) {
 			$this->init();
 		}
+
+		return $this;
 	}
 
 	public function init() {
